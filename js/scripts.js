@@ -23,7 +23,7 @@ class calculator{
     //Todas operações da Calculadora
     processOperation(operation) {
         //verificar se current está vazio
-        if(this.currentOperationText.innerText === "") {
+        if(this.currentOperationText.innerText === "" && operation !== "C") {
             //mudar operação
             if(previousOperationText.innerText !== "") {
                 this.changeOperatiopn(operation);
@@ -51,6 +51,18 @@ class calculator{
             case "*":
                 operationValue = previous * current
                 this.updateScreen(operationValue, operation, current, previous);
+                break;
+            case "DEL":
+                this.processDelOperation();
+                break;
+            case "CE":
+                this.processClearCurrentOperation();
+                break;
+            case "C":
+                this.processClearOperation();
+                break;
+            case "=":
+                this.processEqualsOperation();
                 break;
             default:
                  return;
@@ -90,6 +102,27 @@ class calculator{
 
         this.previousOperationText.innerText = this.previousOperationText.innerText.slice(0, -1) + operation;
     }
+    //deletar ultimo digito
+    processDelOperation() {
+        this.currentOperationText.innerText = this.currentOperationText.innerText.slice(0, -1);
+    }
+    //limpar operação atual
+    processClearCurrentOperation() {
+        this.currentOperationText.innerText = "";
+    }
+    //limpar todos os valores
+    processClearOperation() {
+        this.currentOperationText.innerText = "";
+        this.previousOperationText.innerText = "";
+    }
+    //mostrar o resultado total
+    processEqualsOperation() {
+        const operation = this.previousOperationText.innerText.split(" ")[1];
+       
+        this.processOperation(operation);
+        this.previousOperationText = this.currentOperationText
+    }
+    
 }
 
 const calc = new calculator(previousOperationText, currentOperationText);
