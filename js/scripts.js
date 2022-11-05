@@ -120,7 +120,8 @@ class calculator{
         const operation = this.previousOperationText.innerText.split(" ")[1];
        
         this.processOperation(operation);
-        this.previousOperationText = this.currentOperationText
+        
+
     }
     
 }
@@ -138,3 +139,21 @@ button.forEach ((btn) => {
         }
     });
 });
+
+window.addEventListener("keydown", (e) => {
+    const value = e.key;
+
+    if(+value >= 0 || value === ".") {
+        calc.addDigit(value);
+    } else {
+        calc.processOperation(value);
+    }
+
+    if(value == "Enter") {
+        calc.processOperation("=");
+    }
+
+    if(value == "backspace") {
+        calc.processOperation("DEL");
+    }
+})
